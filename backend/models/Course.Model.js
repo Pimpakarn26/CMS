@@ -7,7 +7,7 @@ const Course = sequelize.define("Course", {
     autoIncrement: true,
     primaryKey: true,
     },
-    name: { 
+    title: { 
     type: DataTypes.STRING, 
     allowNull: false,
     },
@@ -15,14 +15,24 @@ const Course = sequelize.define("Course", {
     type: DataTypes.STRING, 
     allowNull: false ,
     },
-    startDate: { 
-    type: DataTypes.DATE, 
-    allowNull: false, 
+    code: {
+      type: DataTypes.STRING,
+      unique: true, // รหัสวิชาจะต้องไม่ซ้ำกัน
+      allowNull: false
+    },    
+    creditHours: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
     },
-    endDate: { 
-    type: DataTypes.DATE,
-    allowNull: false ,
-    },
+     
+    gradeLevel: {
+      type: DataTypes.STRING, // เพิ่มฟิลด์ระดับชั้น
+      allowNull: false,
+  },
+    classroom: {
+      type: DataTypes.STRING, // เพิ่มฟิลด์ห้องเรียน
+      allowNull: true,
+  },
 });
 
 // Synchronize the model with the database

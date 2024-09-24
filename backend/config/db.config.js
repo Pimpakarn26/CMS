@@ -1,11 +1,10 @@
 require("dotenv").config();
 
-
 module.exports = {
-  HOST: "ep-crimson-smoke-a1dffu5z-pooler.ap-southeast-1.aws.neon.tech",
-  USER: "default",
-  PASSWORD: "NBU4wlXQmre1",
-  DB: "verceldb",
+  HOST: process.env.HOST,
+  USER: process.env.USER,
+  PASSWORD: process.env.PASSWORD,
+  DB: process.env.DATABASE,
   dialect: "postgres",
   pool: {
     max: 5,
