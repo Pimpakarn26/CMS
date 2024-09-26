@@ -18,4 +18,4 @@ db.Role.belongsToMany(db.User, {
     through: "user_roles" // กำหนดตารางเชื่อมโยงชื่อ "user_roles"
 });
 
-module.exports = db
+module.exports = db;

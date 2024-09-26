@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const courseController = require("../controllers/course.controller"); // ไฟล์ควบคุมที่ต้องสร้างสำหรับการจัดการหลักสูตร
-const authJwt  = require("../middleware/authJwt"); // นำเข้า middleware สำหรับการตรวจสอบ JWT
+const {authJwt}  = require("../middleware"); // นำเข้า middleware สำหรับการตรวจสอบ JWT
 
 
 
