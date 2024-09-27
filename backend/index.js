@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express();
 require("dotenv").config();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 5000;
 const courseRouter = require("./router/course.routes");
 const authRouter = require("./router/auth.routes");
 const db = require("./models");
@@ -32,7 +32,7 @@ app.get("/", (req, res) => {
   res.send("<h1>Hello Course Management API</h1>"); // เปลี่ยนข้อความให้เหมาะสม
 });
 
-// Sync database and initialize roles
+//Sync database and initialize roles
 // db.sequelize.sync({ force: false }).then(() => {
 //   initRole();
 //   console.log("Database synced and roles initialized.");
