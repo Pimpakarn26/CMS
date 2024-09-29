@@ -16,7 +16,7 @@ router.use((req, res, next) => {
 router.post("/signup", 
   [
     verifySignUp.checkDuplicateUsernameOrEmail, // ตรวจสอบซ้ำชื่อผู้ใช้และอีเมล
-    verifySignUp.checkRolsExisted // ตรวจสอบบทบาท
+    verifySignUp.checkRolesExisted // ตรวจสอบบทบาท
   ], 
   authController.signup
 );

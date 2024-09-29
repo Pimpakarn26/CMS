@@ -1,6 +1,6 @@
 const sequelize = require("./db")
 const Sequelize = require("sequelize");
-const User = require("./user.model");
+const User = require("./ีuser.model");
 const Role = require("./role.model")
 
 const db = {};
@@ -17,5 +17,8 @@ db.User.belongsToMany(db.Role, {
 db.Role.belongsToMany(db.User, {
     through: "user_roles" // กำหนดตารางเชื่อมโยงชื่อ "user_roles"
 });
+// db.sequelize.sync({ force: true }).then(() => {
+//     console.log("Tables created!");
+// });
 
-module.exports = db
+module.exports = db;
