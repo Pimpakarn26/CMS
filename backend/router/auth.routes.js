@@ -1,30 +1,27 @@
 const express = require("express");
 const router = express.Router();
-const authController = require("../Controllers/auth.controller");
-const { verifySignUp } = require("../Middleware");
+const authController = require("../controllers/auth.controller"); // ไฟล์ควบคุมที่ต้องสร้างสำหรับการลงทะเบียนและเข้าสู่ระบบ
+const verifySignUp = require("../middleware/verifySignUp");
 
+// CORS middleware
 router.use((req, res, next) => {
-    res.header(
-      "Access-Control-Allow-Headers",
-      "x-access-token, Origin, Content-Type, Accept"
-    );
-    next();
+  res.header(
+    "Access-Control-Allow-Headers",
+    "x-access-token, Origin, Content-Type, Accept"
+  );
+  next();
 });
 
-// กำหนดเส้นทางสำหรับการสมัครสมาชิก (signup)
-// ตรวจสอบ middleware verifySignUp ว่ามีการ import อย่างถูกต้องและมีการใช้งานฟังก์ชัน `checkDuplicateUsernameOrEmail` และ `checkRolesExisted` ในไฟล์ `verifySignUp.js`
-router.post(
-    "/signup",
-    [
-        verifySignUp.checkDuplicateUsernameOrEmail, 
-        verifySignUp.checkRolsExisted
-    ],
-    authController.signup
+// ลงทะเบียนผู้ใช้ใหม่
+router.post("/signup", 
+  [
+    verifySignUp.checkDuplicateUsernameOrEmail, // ตรวจสอบซ้ำชื่อผู้ใช้และอีเมล
+    verifySignUp.checkRolesExisted // ตรวจสอบบทบาท
+  ], 
+  authController.signup
 );
 
-// เส้นทางสำหรับการเข้าสู่ระบบ (signin)
+// ลงชื่อเข้าใช้
 router.post("/signin", authController.signin);
 
 module.exports = router;
-  
-

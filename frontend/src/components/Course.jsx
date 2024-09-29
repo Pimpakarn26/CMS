@@ -1,55 +1,45 @@
-import React from 'react';
-import Card from './Card';
+import React, { useEffect, useState } from "react";
+import Card from "./Card"; // Make sure this path is correct
 
-const Course = () => {
-  const courses = [
-    {
-      name: "Introduction to Computer Science",
-      type: "Core",
-      code: "CS101",
-      creditHours: 3,
-      gradeLevel: "Undergraduate",
-      classroom: "Room 101",
-    },
-    {
-      name: "Advanced Mathematics",
-      type: "Elective",
-      code: "MATH201",
-      creditHours: 4,
-      gradeLevel: "Undergraduate",
-      classroom: "Room 202",
-    },
-    {
-      name: "Data Structures",
-      type: "Core",
-      code: "CS201",
-      creditHours: 3,
-      gradeLevel: "Undergraduate",
-      classroom: "Room 303",
-    },
-    {
-      name: "Database Systems",
-      type: "Core",
-      code: "CS301",
-      creditHours: 3,
-      gradeLevel: "Undergraduate",
-      classroom: "Room 404",
-    },
-    {
-      name: "Web Development",
-      type: "Elective",
-      code: "CS302",
-      creditHours: 4,
-      gradeLevel: "Undergraduate",
-      classroom: "Room 505",
-    },
-  ];
+const apiUrl = import.meta.env.VITE_BACKEND_URL; // Load API URL from environment variables
+
+const Courses = () => {
+  const [courses, setCourses] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchCourses = async () => {
+      try {
+        const response = await fetch(`${apiUrl}/api/courses`); // Use environment variable for API endpoint
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        const data = await response.json();
+        setCourses(data);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCourses();
+  }, []);
+
+  if (loading) {
+    return <div className="text-center">Loading...</div>; // Add Tailwind class for styling
+  }
+
+  if (error) {
+    return <div className="text-center text-red-500">Error: {error}</div>; // Style error message
+  }
 
   return (
-    <div className="flex flex-wrap justify-center">
-      {courses.map((course, index) => (
+    <div className="flex flex-wrap justify-center gap-4 p-4">
+      {courses.map((course) => (
         <Card
-          key={index}
+          key={course.code} // Assuming 'code' is unique for courses
           name={course.name}
           type={course.type}
           code={course.code}
@@ -62,4 +52,4 @@ const Course = () => {
   );
 };
 
-export default Course;
+export default Courses;
