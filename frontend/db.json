@@ -1,0 +1,72 @@
+{
+    "courses": [
+        {
+            "id": 1,
+            "name": "Introduction to Algorithm Design",
+            "type": "algorithms or data structures",
+            "code": "7151301",
+            "creditHours": 3,
+            "gradeLevel": "First year student",
+            "classroom": "C408"
+            
+        },
+        {
+            "id": 2,
+            "name": "Software Architecture",
+            "type": "Designing a large software",
+            "code": "7153402",
+            "creditHours": 3,
+            "gradeLevel": "Second year student",
+            "classroom": "C409"
+            
+        },
+        {
+            "id": 3,
+            "name": "Software Project Management",
+            "type": "Project Management",
+            "code": "7152102",
+            "creditHours": 3,
+            "gradeLevel": "Third year student",
+            "classroom": "C409"
+            
+        },
+        {
+            "id": 4,
+            "name": "Human and Computer Interaction",
+            "type": "Research on the design and use of computer technology",
+            "code": "71512012",
+            "creditHours": 3,
+            "gradeLevel": "First year student",
+            "classroom": "C408"
+            
+        },
+        {
+            "id": 5,
+            "name": "Visual Programming",
+            "type": "Create programs by manipulating graphical elements.",
+            "code": "7153315",
+            "creditHours": 3,
+            "gradeLevel": "Third year student",
+            "classroom": "C408"
+        },
+        {
+            "id": 6,
+            "name": "Discrete Mathematics",
+            "type": "Logic,Relation and Function, Counting.. ",
+            "code": "7152801",
+            "creditHours": 3,
+            "gradeLevel": "Second year student",
+            "classroom": "C409"
+        },
+        {
+            "id": 7,
+            "name": "Linear Algebra and Data Structure",
+            "type": "Linear Data Structure",
+            "code": "7152802",
+            "creditHours": 3,
+            "gradeLevel": "Second year student",
+            "classroom": "C409"
+        }
+        
+    ]
+}

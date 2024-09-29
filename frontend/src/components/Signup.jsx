@@ -1,36 +1,47 @@
-import React from 'react';
+// src/components/Signup.jsx
+import React, { useState } from 'react';
+import { useAuthContext } from '../context/AuthContext'; // Import useAuth
 
 const Signup = () => {
-  const handleSignup = (e) => {
+  const { signup } = useAuthContext(); // เข้าถึงฟังก์ชัน signup
+  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [message, setMessage] = useState('');
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // ทำการประมวลผลการ signup ที่นี่
+    try {
+      await signup(username, email, password);
+      setMessage('Signup successful!'); // แจ้งว่าการสมัครสมาชิกสำเร็จ
+    } catch (error) {
+      setMessage(error.message); // แสดงข้อผิดพลาด
+    }
   };
 
   return (
-    <div className="container mx-auto p-4">
-      <h2 className="text-3xl font-bold text-center mb-4">Signup</h2>
-      <form onSubmit={handleSignup} className="max-w-md mx-auto">
-        <div className="mb-4">
-          <label className="label">
-            <span className="label-text">Name</span>
-          </label>
-          <input type="text" className="input input-bordered w-full" required />
-        </div>
-        <div className="mb-4">
-          <label className="label">
-            <span className="label-text">Email</span>
-          </label>
-          <input type="email" className="input input-bordered w-full" required />
-        </div>
-        <div className="mb-4">
-          <label className="label">
-            <span className="label-text">Password</span>
-          </label>
-          <input type="password" className="input input-bordered w-full" required />
-        </div>
-        <button type="submit" className="btn btn-primary w-full">Signup</button>
-      </form>
-    </div>
+    <form onSubmit={handleSubmit}>
+      <input 
+        type="text" 
+        placeholder="Username" 
+        value={username} 
+        onChange={(e) => setUsername(e.target.value)} 
+      />
+      <input 
+        type="email" 
+        placeholder="Email" 
+        value={email} 
+        onChange={(e) => setEmail(e.target.value)} 
+      />
+      <input 
+        type="password" 
+        placeholder="Password" 
+        value={password} 
+        onChange={(e) => setPassword(e.target.value)} 
+      />
+      <button type="submit">Sign Up</button>
+      {message && <p>{message}</p>}
+    </form>
   );
 };
 

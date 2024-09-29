@@ -1,27 +1,27 @@
-import './App.css'
+// App.jsx
+import './App.css';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-// import Card from './Components/Card';
-import Course from './Components/Course';
-// import Header from './Components/Hearder';
-// import Search from './Components/Search';
-// import Navbar from './Components/Navbar';
-import HomePage from './Pages/HomePage';
-import Login from './Components/Login';
-import Signup from './Components/Signup';
+import { AuthProvider } from './context/AuthContext';
+import HomePage from './pages/HomePage';
+import Signin from './components/Signin';
+import Signup from './components/Signup';
+import CreateCourse from './components/CreateCourse';
+import Course from './components/Course'; // Ensure the path is correct
 
 function App() {
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/courses" element={<Course />} />
-      </Routes>
-    </Router>
+    <AuthProvider>
+      <Router>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/courses" element={<Course />} />
+          <Route path="/signin" element={<Signin />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/create-course" element={<CreateCourse />} />
+        </Routes>
+      </Router>
+    </AuthProvider>
   );
 }
-
-
 
 export default App;
