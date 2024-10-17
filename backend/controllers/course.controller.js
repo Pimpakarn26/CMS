@@ -1,130 +1,94 @@
-const Course = require("../models/course.model");
+const Course = require("../Models/course.model");
 
-// Create and Save new course
+// Create a new course
 exports.create = async (req, res) => {
-  const { 
-    name, 
-    description, 
-    code, 
-    creditHours, 
-    gradeLevel, 
-    classroom 
-  } = req.body;
-// Validate data
-  if (!name || !description || !code || !creditHours || !gradeLevel || !classroom) {
-    return res.status(400).send({
-      message: "Name, Description, Code, CreditHours, GradeLevel or Classroom can't be empty!",
+  // console.log(req.body); 
+  try {
+    const { name, type, code, creditHours, gradeLevel, classroom } = req.body;
+    console.log('Creating course with data:', { name, type, code, creditHours, gradeLevel, classroom });
+
+    const newCourse = await Course.create({
+      name,
+      type,
+      code,
+      creditHours,
+      gradeLevel,
+      classroom,
     });
+    
+
+    res.status(201).json({ message: 'Course created successfully', course: newCourse });
+  } catch (error) {
+    res.status(500).json({ message: 'Error creating course', error });
   }
-
-// ตรวจสอบว่ามีวิชาที่มีรหัสวิชาเดียวกันอยู่แล้วหรือไม่
-  await Course.findOne({ where: { code: code } }).then((course) => {
-    if (course) {
-      return res.status(400).send({
-        message: "Course with this code already exists!",
-      });
-    }
-
-// Create a new Course
-  const newCourse = {
-    name,
-    description,
-    code,
-    creditHours,
-    gradeLevel,
-    classroom,
-  };
-
-  Course.create(newCourse)
-    .then((data) => {
-      res.send(data);
-    })
-    .catch((error) => {
-      res.status(500).send({
-        message:
-          error.message ||
-          "Something went wrong while creating the course!",
-      });
-    });
-  });
 };
 
 // Get all courses
-// ดึงข้อมูลวิชาทั้งหมด
 exports.getAll = async (req, res) => {
-  await Course.findAll()
-    .then((data) => {
-      res.send(data);
-    })
-    .catch((error) => {
-      res.status(500).send({
-        message:
-          error.message ||
-          "Something went wrong while retrieving the courses!",
-      });
-    });
+  try {
+    const courses = await Course.findAll();
+    res.status(200).json(courses);
+  } catch (error) {
+    res.status(500).json({ message: 'Error retrieving courses', error });
+  }
 };
 
-// Get course by ID
-// ดึงข้อมูลวิชาตาม ID
+// Get a course by ID
 exports.getById = async (req, res) => {
-  const id = req.params.id;
+  try {
+    const { id } = req.params;
+    const course = await Course.findByPk(id);
 
-  await Course.findByPk(id)
-    .then((data) => {
-      if (!data) {
-        res.status(404).send({
-          message: "No course found with ID : " + id,
-        });
-      } else {
-        res.send(data);
-      }
-    })
-    .catch((error) => {
-      res.status(500).send({
-        message:
-          error.message ||
-          "Something went wrong while retrieving the course!",
-      });
-    });
+    if (!course) {
+      return res.status(404).json({ message: 'Course not found' });
+    }
+
+    res.status(200).json(course);
+  } catch (error) {
+    res.status(500).json({ message: 'Error retrieving course', error });
+  }
 };
 
-// Update course by ID
-// แก้ไขข้อมูลวิชาตาม ID
+// Update a course
 exports.update = async (req, res) => {
-  const id = req.params.id;
+  try {
+    const { id } = req.params;
+    const { name, type, code, creditHours, gradeLevel, classroom } = req.body;
 
-  await Course.update(req.body, { where: { id: id } })
-    .then((num) => {
-      if (num == 1) {
-        res.send({ message: "Course was updated successfully!" });
-      } else {
-        res.send({
-          message:
-            "Can't update course with ID : " + id + ". Maybe course wasn't found or req.body is empty!",
-        });
-      }
-    })
-    .catch((error) => {
-      res.status(500).send({
-        message:
-          error.message ||
-          "Something went wrong while updating the course!",
-      });
+    const course = await Course.findByPk(id);
+
+    if (!course) {
+      return res.status(404).json({ message: 'Course not found' });
+    }
+
+    await course.update({
+      name,
+      type,
+      code,
+      creditHours,
+      gradeLevel,
+      classroom,
     });
+
+    res.status(200).json({ message: 'Course updated successfully', course });
+  } catch (error) {
+    res.status(500).json({ message: 'Error updating course', error });
+  }
 };
 
-// Delete course by ID
-// ลบวิชาตาม ID
-exports.delete = async (req, res) => {
-  const id = req.params.id;
+// Delete a course
+exports.delete= async (req, res) => {
+  try {
+    const { id } = req.params;
+    const course = await Course.findByPk(id);
 
-  await Course.destroy({ where: { id: id } })
-    .then((num) => {
-      if (num == 1) {
-        res.send({ message: "Course was deleted successfully!" });
-      } else {
-        res.send({ message: "Can't delete course with ID : " + id + ". Maybe course wasn't found!" });
-      }
-    });
+    if (!course) {
+      return res.status(404).json({ message: 'Course not found' });
+    }
+
+    await course.destroy();
+    res.status(200).json({ message: 'Course deleted successfully' });
+  } catch (error) {
+    res.status(500).json({ message: 'Error deleting course', error });
+  }
 };

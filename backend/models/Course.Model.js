@@ -1,5 +1,5 @@
 const { DataTypes } = require("sequelize");
-const sequelize = require("./db"); // Import the sequelize instance
+const sequelize = require("./db");
 
 const Course = sequelize.define("Course", {
     id: {
@@ -11,7 +11,7 @@ const Course = sequelize.define("Course", {
     type: DataTypes.STRING, 
     allowNull: false,
     },
-    description: { 
+    type: { 
     type: DataTypes.STRING, 
     allowNull: false ,
     },
