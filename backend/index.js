@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express();
 require("dotenv").config();
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 3000;
 const courseRouter = require("./router/course.routes");
 const authRouter = require("./router/auth.routes");
 const db = require("./models");

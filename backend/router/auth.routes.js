@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const authController = require("../controllers/auth.controller"); // ไฟล์ควบคุมที่ต้องสร้างสำหรับการลงทะเบียนและเข้าสู่ระบบ
-const verifySignUp = require("../middleware/verifySignUp");
+const {verifySignUp} = require("../middleware");
 
 // CORS middleware
 router.use((req, res, next) => {
